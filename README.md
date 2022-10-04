@@ -1,5 +1,20 @@
 # WORK IN PROGRESS
 
+    If you copy-paste from example app: 
+
+    The Testapp is using the package folder (which is also the npm package source) as a dependency, in your own app, you can use the solid-pocketbase hooks by `(p)npm i solid-pocketbase` but you have to change the import statment from
+
+    import { useRecord, useRecords } from '../package/src';
+
+    to
+
+    import { useRecord, useRecords } from 'solid-pocketbase';
+
+    (your IDE might throw an error anyway)
+ 
+    
+
+
 ## Usage
 I use pnpm. <br>
 This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed.
