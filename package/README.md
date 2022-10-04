@@ -1,3 +1,5 @@
+# Work In Progress
+
 ## Usage
 
 ```bash
@@ -5,51 +7,64 @@ pnpm i solid-pocketbase
 ```
 
 ```tsx
-const [itemId, setItemId] = createSignal<string>();
+import PocketBase, { PocketBaseProvider } from 'solid-pocketbase';
 
-const [record] = createResource(itemId, (itemId) => {
-    return useRecord("items", itemId)
-});
+const PBClient = new PocketBase('http://127.0.0.1:8090');
 
-onMount(async () => {
-    const url = window.location.href;
-    setItemId(() => url.slice(22))
-    }
-})
-
-return (
-    <Show when={record()?.value}
-        fallback={
-            <p>Loading...</p>
-        }
-    >
-        <h4>
-            Value:
-        </h4>
-        <h5>
-            {record()?.value?}
-        </h5>
-    </Show>
+render(() => (
+    <PocketBaseProvider client={PBClient}>
+        <App />
+    </PocketBaseProvider>
+), document.getElementById('root') as HTMLElement);
 )
 ```
 
 ```tsx
-const records = useRecords("items");
+const App: Component = () => {
 
-return (
-    <For
-        each={records.value}
-        fallback={
+  const records = useRecords("humans");
+
+  const coolestHuman = useRecord("humans", "dx33r9l8oiy7cff")
+  
+  return (
+    <div class={styles.App}>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>hasCar?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <For each={records.records} fallback={
             <tr>
-              <td></td>
+              <td>Loading...</td>
+              <td aria-busy="true"></td>
             </tr>
-        }
-    >
-        {record =>
-            <tr>
-              <td>{record.id}</td>
-            </tr>
-        }
-    </For>
-)
+          }>
+            {(human) =>
+              <tr>
+                <td>{human.name}</td>
+                <td>{human.hasCar ? "Yes" : "No"}</td>
+              </tr>
+            }
+          </For>
+        </tbody>
+      </table>
+      <Switch>
+        <Match when={!coolestHuman.value}>
+          <h4 aria-busy="true">{coolestHuman.error?.message}</h4>
+        </Match>
+        <Match when={coolestHuman?.value}>
+          <h3>The coolest human:</h3>
+          <h4>{coolestHuman.value?.name}</h4>
+        </Match>
+      </Switch>
+
+
+    </div >
+  );
+};
+
+export default App;
 ```

@@ -4,8 +4,11 @@ import styles from './App.module.css';
 import { useRecord, useRecords } from '../package/src';
 
 const App: Component = () => {
+
   const records = useRecords("humans");
+
   const coolestHuman = useRecord("humans", "dx33r9l8oiy7cff")
+
   return (
     <div class={styles.App}>
       <table>
