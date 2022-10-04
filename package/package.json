@@ -1,0 +1,24 @@
+{
+  "name": "solid-pocketbase",
+  "type": "module",
+  "version": "0.0.4",
+  "description": "Solid Hooks for PocketBase",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "solidjs",
+    "pocketbase",
+    "hooks"
+  ],
+  "author": "Tim Winkler",
+  "license": "MIT",
+  "dependencies": {
+    "pocketbase": "^0.7.1",
+    "solid-js": "^1.5.7"
+  },
+  "devDependencies": {
+    "typescript": "^4.8.4"
+  }
+}
